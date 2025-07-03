@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="colorPrimary">#3F51B5</color>
+	<color name="colorPrimaryDark">#303F9F</color>
+	<color name="colorAccent">#FF4081</color>
+
+	<color name="black"  xmlns:tools="http://schemas.android.com/tools" tools:override="true">#FF000000</color>
+	<color name="white"  xmlns:tools="http://schemas.android.com/tools" tools:override="true">#FFFFFFFF</color>
+
+	<color name="logo_background_white">#F7F7F7</color>
+	<color name="toolbar_background">#80000000</color>
+	<color name="file_option_button_background">#EECCCCCC</color>
+	<color name="folder_picker_header_background">#CC000000</color>
+	<color name="thumbnail_background">#56FFFFFF</color>
+	<color name="light_black">#66000000</color>
+	<color name="white_color_text">#FFFFFFFF</color>
+	<color name="white_bkground_transparent">#33FAFAFA</color>
+	<color name="gray_color_text">#666666</color>
+	<color name="light_gray_color_text">#999999</color>
+	<color name="light_gray_background">#4Fd3d3d3</color>
+	<color name="light_gray">#d3d3d3</color>
+	<color name="disabled_color">#B3E0E0E0</color>
+	<color name="disabled_text_color">#9D9FA2</color>
+	<color name="transparent">#d3d3d3</color>
+	<color name="black_color_text">#000000</color>
+	<color name="dark_color_text">#333333</color>
+	<color name="peach_color_text">#00AFF0</color>
+	<color name="light_blue_color">#BEE0FF</color>
+	<color name="light_color_text">#FFCCCCCC</color>
+	<color name="red_color_text">#FF0000</color>"
+	<color name="orange_color_text">#856404</color>
+
+</resources>

@@ -1,0 +1,105 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+kapt {
+    correctErrorTypes = true
+}
+
+android {
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.bridge.androidtechnicaltest"
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    dataBinding {
+        enabled = true
+    }
+    namespace 'com.bridge.androidtechnicaltest'
+}
+
+def koinVersion = "3.4.3"
+def androidXLegacySupport = "1.0.0"
+def roomVersion = "2.6.1"
+def retrofitVersion = "2.4.0"
+def rxandroidVersion = "2.0.2"
+def rxJavaVersion = "2.1.14"
+def lifecycleVersion = "2.6.2"
+
+dependencies {
+    implementation "androidx.legacy:legacy-support-v4:$androidXLegacySupport"
+    implementation "androidx.appcompat:appcompat:$androidXLegacySupport"
+
+    implementation "androidx.recyclerview:recyclerview:1.3.1"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
+    implementation "com.google.android.material:material:1.9.0"
+
+    implementation "io.insert-koin:koin-core:${koinVersion}"
+    implementation "io.insert-koin:koin-android:${koinVersion}"
+
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+
+    implementation "androidx.room:room-runtime:$roomVersion"
+    implementation "androidx.room:room-rxjava2:$roomVersion"
+    implementation 'androidx.room:room-common-jvm:2.7.2'
+    implementation 'com.google.android.gms:play-services-maps:19.2.0'
+    implementation 'androidx.test.ext:junit-ktx:1.2.1'
+    kapt "androidx.room:room-compiler:$roomVersion"
+    testImplementation "androidx.room:room-testing:$roomVersion"
+
+    implementation "io.reactivex.rxjava2:rxandroid:${rxandroidVersion}"
+    implementation "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
+    implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}"
+
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.2"
+
+    testImplementation 'junit:junit:4.12'
+    androidTestAnnotationProcessor 'com.google.dagger:dagger-compiler:2.11'
+
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
+
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+    implementation 'com.github.Dhaval2404:ImagePicker:2.1'
+
+    implementation 'org.osmdroid:osmdroid-android:6.1.14'
+
+    testImplementation "org.mockito:mockito-core:5.2.0"
+    testImplementation "androidx.arch.core:core-testing:2.2.0"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
+
+}

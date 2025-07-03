@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dimen_5"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/back_button"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="@dimen/dimen_5"
+        android:layout_marginTop="@dimen/dimen_5"
+        android:clickable="true"
+        android:contentDescription="@string/back_button"
+        android:focusable="true"
+        android:padding="10dp"
+        android:paddingStart="2dp"
+        android:paddingEnd="5dp"
+        android:src="@drawable/ic_back_black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/formCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_ten"
+        android:layout_marginTop="@dimen/margin_twelve"
+        android:layout_marginEnd="@dimen/margin_ten"
+        android:layout_marginBottom="@dimen/margin_ten"
+        app:cardBackgroundColor="@color/light_blue_color"
+        app:cardCornerRadius="@dimen/margin_thirty"
+        app:cardElevation="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/margin_fifteen"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/margin_fifteen">
+
+            <RelativeLayout
+                android:id="@+id/addImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_fifteen"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/oval_marker"
+                android:padding="2dp"
+                app:layout_constraintBottom_toTopOf="@id/addName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/back_button">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/profImg"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:contentDescription="@string/pupil_image"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/no_user_photo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/RoundedImageView" />
+            </RelativeLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/addName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/margin_fifteen"
+                android:layout_marginEnd="@dimen/default_margin"
+                android:layout_marginBottom="@dimen/margin_ten"
+                android:layout_weight="1"
+                app:cardCornerRadius="@dimen/margin_twenty"
+                app:cardElevation="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/addImage">
+
+                <EditText
+                    android:id="@+id/pupil_name_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="start"
+                    android:autofillHints="name"
+                    android:background="@null"
+                    android:hint="@string/pupil_detail_name"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapWords"
+                    android:paddingStart="@dimen/margin_fifteen"
+                    android:paddingEnd="@dimen/margin_fifteen"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/black_color_text"
+                    android:textColorHint="@color/gray_color_text"
+                    android:textSize="@dimen/text_size_normal" />
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/margin_ten"
+                android:layout_marginEnd="@dimen/default_margin"
+                android:layout_marginBottom="@dimen/margin_ten"
+                android:layout_weight="1"
+                app:cardCornerRadius="@dimen/margin_twenty"
+                app:cardElevation="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/addName">
+
+                <AutoCompleteTextView
+                    android:id="@+id/countryDropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/pupil_country"
+                    android:inputType="text"
+                    android:background="@null"
+                    android:dropDownHeight="wrap_content"
+                    android:paddingStart="@dimen/margin_fifteen"
+                    android:paddingEnd="@dimen/margin_fifteen"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textColor="@android:color/black"/>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/latLng"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/margin_ten"
+                android:layout_marginEnd="@dimen/default_margin"
+                android:layout_marginBottom="@dimen/margin_ten"
+                android:layout_weight="1"
+                app:cardCornerRadius="@dimen/margin_twenty"
+                app:cardElevation="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/country">
+
+                <TextView
+                    android:id="@+id/latLng_name_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="start"
+                    android:autofillHints="Pupil LatLng"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/pupil_latlng"
+                    android:paddingStart="@dimen/margin_fifteen"
+                    android:paddingEnd="@dimen/margin_fifteen"
+                    android:textColor="@color/black_color_text"
+                    android:textColorHint="@color/gray_color_text"
+                    android:textSize="@dimen/text_size_normal" />
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/saveEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="@dimen/margin_fifteen"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/green_stripe_rounded_button"
+        android:paddingStart="@dimen/margin_forty"
+        android:paddingEnd="@dimen/margin_forty"
+        android:text="@string/add_pupil"
+        android:textAllCaps="false"
+        android:textColor="@color/peach_color_text"
+        android:textSize="@dimen/small_text_size"
+        android:visibility="visible" />
+
+
+</LinearLayout>
