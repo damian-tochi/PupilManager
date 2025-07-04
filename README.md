@@ -56,6 +56,6 @@ The API attempts to simulate real world usage in several ways:
    ```
    
 ## APK Download
-You can download the APK file from the following link: https://drive.google.com/file/d/1HuUFmQNx6p31t8lqd1FXKqEtiJ2Qu84x/view?usp=sharing
+You can download the APK file from the following link: https://drive.google.com/file/d/1sTCYZ0lGpLzR2DtMPQ1MHuhsg36JZ3qR/view?usp=sharing
 
 ## Thanks!
