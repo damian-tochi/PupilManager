@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -20,7 +19,6 @@ import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.imageview.ShapeableImageView
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.io.File
 
 
 class PupilEditFragment : BaseFragment() {
@@ -79,28 +77,28 @@ class PupilEditFragment : BaseFragment() {
         }
 
         submitBtn.setOnClickListener {
-            val id = pupilId.text.toString().toIntOrNull()
+            val id = pupilId.text.toString()
             val name = pupilName.text.toString()
             val country = countryDropdown.text.toString()
             val lat = sharedViewModel.selectedPupil.value?.latitude ?: 0.0
             val lng = sharedViewModel.selectedPupil.value?.longitude ?: 0.0
 
-            if (id == null || name.isEmpty() || country.isEmpty()) {
+            if (id.isEmpty() || name.isEmpty() || country.isEmpty()) {
                 showToast("Please fill all fields")
                 return@setOnClickListener
             }
-
             val pupilData = Pupil(
                 pupilId = id.toLong(),
                 name = name,
                 country = country,
                 image = imageUrl,
                 longitude = lng,
-                latitude = lat
+                latitude = lat,
+                imageSynced = sharedViewModel.selectedPupil.value?.imageSynced?:false
             )
             observeViewModel()
-            viewModel.updatePupil(id, pupilData)
-            sharedViewModel.updatePupil(id, name, country, imageUrl)
+            viewModel.updatePupil(id.toInt(), pupilData)
+            sharedViewModel.updatePupil(id.toInt(), name, country, imageUrl)
         }
 
         backButton.setOnClickListener {
@@ -137,6 +135,7 @@ class PupilEditFragment : BaseFragment() {
                     .placeholder(R.drawable.no_user_photo)
                     .into(pupilImage)
             }
+            sharedViewModel.updateImage(imageUrl)
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             showToast("Error: " + ImagePicker.getError(data))
         } else {

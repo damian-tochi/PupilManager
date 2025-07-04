@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -20,7 +19,6 @@ import com.bridge.androidtechnicaltest.viewmodel.PupilListViewModel
 import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.imageview.ShapeableImageView
-import java.io.File
 
 
 class PupilCreateFragment : BaseFragment() {
@@ -96,6 +94,7 @@ class PupilCreateFragment : BaseFragment() {
         }
 
         submitBtn.setOnClickListener {
+            sharedViewModel.updateCountry(countryDropdown.text.toString())
             val name = pupilName.text.toString()
             val id = pupil?.pupilId ?: 0
             val lat = pupil?.latitude
@@ -134,6 +133,7 @@ class PupilCreateFragment : BaseFragment() {
                     .placeholder(R.drawable.no_user_photo)
                     .into(pupilImage)
             }
+            sharedViewModel.updateImage(imageUrl)
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             showToast("Error: " + ImagePicker.getError(data))
         } else {

@@ -34,7 +34,7 @@ data class Pupil(
         @ColumnInfo(name = "is_new")
         var isNew: Boolean = true,
 
-        val imageSynced: Boolean = false
+        var imageSynced: Boolean = true
 ){
         override fun equals(other: Any?): Boolean {
                 if (this === other) return true

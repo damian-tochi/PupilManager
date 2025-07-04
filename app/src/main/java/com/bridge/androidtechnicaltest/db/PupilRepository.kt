@@ -11,7 +11,6 @@ import io.reactivex.plugins.RxJavaPlugins.onError
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.map
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -27,7 +26,10 @@ import java.io.IOException
 import java.net.URI
 import kotlinx.coroutines.flow.flowOn
 import androidx.lifecycle.asLiveData
-
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import androidx.lifecycle.asFlow
 
 
 interface IPupilRepository {
@@ -43,6 +45,12 @@ interface IPupilRepository {
 
 class PupilRepository(private val database: AppDatabase, private val pupilApi: PupilApi) :
     IPupilRepository {
+
+    private val _syncingPupil = MutableStateFlow(false)
+    private val syncingPupil: StateFlow<Boolean> = _syncingPupil
+
+    private val _syncError = MutableStateFlow(false)
+    val syncError: StateFlow<Boolean> = _syncError
 
     override fun getOrFetchPupils(): Single<PupilList> {
         return database.pupilDao.getPupils()
@@ -231,6 +239,8 @@ class PupilRepository(private val database: AppDatabase, private val pupilApi: P
     }
 
     override fun syncPupils(): Completable {
+        _syncingPupil.value = true
+        _syncError.value = false
         return database.pupilDao.getPendingPupils()
             .flattenAsFlowable { it }
             .flatMapCompletable { unSyncedPupil ->
@@ -244,9 +254,14 @@ class PupilRepository(private val database: AppDatabase, private val pupilApi: P
                                 imageSynced = true,
                                 lastUpdated = System.currentTimeMillis()
                             )
+
                             Completable.fromAction {
                                 database.pupilDao.updatePupil(updated)
                             }
+                        }
+                        .doOnError {
+                            _syncingPupil.value = false
+                            _syncError.value = true
                         }
                 } else {
                     Completable.complete()
@@ -254,11 +269,13 @@ class PupilRepository(private val database: AppDatabase, private val pupilApi: P
 
                 imageUploadFlow.andThen(
                     Completable.defer {
-                        val latest = database.pupilDao.getPupilById(unSyncedPupil.pupilId.toInt()).blockingGet()
+                        val latest =
+                            database.pupilDao.getPupilById(unSyncedPupil.pupilId).blockingGet()
 
                         val apiCall = if (latest.isNew) {
                             pupilApi.createPupil(latest.copy(pupilId = 0))
                                 .flatMapCompletable { created ->
+                                    _syncingPupil.value = false
                                     Completable.fromAction {
                                         database.pupilDao.deletePupil(latest)
                                         database.pupilDao.insertPupil(
@@ -274,6 +291,7 @@ class PupilRepository(private val database: AppDatabase, private val pupilApi: P
                         } else {
                             pupilApi.updatePupil(latest.pupilId.toString(), latest)
                                 .flatMapCompletable { updated ->
+                                    _syncingPupil.value = false
                                     Completable.fromAction {
                                         database.pupilDao.updatePupil(
                                             updated.copy(
@@ -288,6 +306,8 @@ class PupilRepository(private val database: AppDatabase, private val pupilApi: P
 
                         apiCall.onErrorResumeNext { error ->
                             handleApiError(error, "PupilRepository: syncPupils")
+                            _syncError.value = true
+                            _syncingPupil.value = false
                             Completable.fromAction {
                                 database.pupilDao.updatePupil(
                                     latest.copy(pendingSync = true)
@@ -312,14 +332,23 @@ class PupilRepository(private val database: AppDatabase, private val pupilApi: P
     }
 
     override fun observeSyncStatus(): LiveData<SyncStatus> {
-        return database.pupilDao.observePendingPupils()
-            .map { pendingList ->
-                if (pendingList.isEmpty()) {
-                    SyncStatus.SUCCESS
+        return combine<List<Pupil>, Boolean, Boolean, SyncStatus>(
+            database.pupilDao.observePendingPupils(),
+            syncingPupil,
+            syncError
+        ) { pendingList, syncing, error ->
+            if (pendingList.isEmpty()) {
+                SyncStatus.SUCCESS
+            } else {
+                if (error) {
+                    SyncStatus.ERROR
+                }else if (syncing) {
+                    SyncStatus.SYNCING
                 } else {
                     SyncStatus.PENDING
                 }
             }
+        }
             .catch { emit(SyncStatus.ERROR) }
             .flowOn(Dispatchers.IO)
             .asLiveData()
@@ -387,7 +416,10 @@ class PupilRepository(private val database: AppDatabase, private val pupilApi: P
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     emitter.onError(e)
-                    Log.e("PupilRepository: Cloudinary Error", "Upload failed: ${e.localizedMessage}")
+                    Log.e(
+                        "PupilRepository: Cloudinary Error",
+                        "Upload failed: ${e.localizedMessage}"
+                    )
                 }
 
                 override fun onResponse(call: Call, response: Response) {

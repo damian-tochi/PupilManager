@@ -79,8 +79,6 @@ class MapsFragment : BaseFragment() {
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
-
-                showToast("Location Saved: ${point.latitude}, ${point.longitude}")
                 backToPrevious()
             } ?:
             showToast("Tap to select a location")

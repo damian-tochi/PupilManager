@@ -27,10 +27,10 @@ class PupilSharedViewModel(private val pupilDao: PupilDao) : ViewModel() {
         observeUnsyncedPupils()
     }
 
-    private fun observeUnsyncedPupils() {
+    fun observeUnsyncedPupils() {
         pupilDao.observePendingPupils()
-            .onEach { pending ->
-                _unSyncedCount.value = pending.size
+            .onEach {
+                pending -> _unSyncedCount.value = pending.size
             }
             .catch { _unSyncedCount.value = 0 }
             .flowOn(Dispatchers.IO)
@@ -66,6 +66,7 @@ class PupilSharedViewModel(private val pupilDao: PupilDao) : ViewModel() {
     fun updateImage(image: String) {
         _selectedPupil.value?.let {
             it.image = image
+            it.imageSynced = false
         }
     }
 }

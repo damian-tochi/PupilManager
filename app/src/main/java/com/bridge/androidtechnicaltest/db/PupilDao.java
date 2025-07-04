@@ -40,6 +40,6 @@ public interface PupilDao {
     void clearAll();
 
     @Query("SELECT * FROM Pupils WHERE pupil_id = :id")
-    Single<Pupil> getPupilById(int id);
+    Single<Pupil> getPupilById(Long id);
 
 }

@@ -40,6 +40,9 @@ class MainActivity : AppCompatActivity() {
                 if (count > 0) {
                     syncStatusContainer.visibility = View.VISIBLE
                     syncStatusText.text = "$count unsynced pupil(s). Tap to sync."
+                    syncStatusContainer.setOnClickListener {
+                        viewModel.syncPendingPupils()
+                    }
                 } else {
                     syncStatusContainer.visibility = View.GONE
                 }
@@ -50,7 +53,10 @@ class MainActivity : AppCompatActivity() {
             when (syncStatus) {
                 SyncStatus.PENDING -> {
                     syncStatusContainer.visibility = View.VISIBLE
-                    syncStatusText.text = getString(R.string.syncing)
+                    syncStatusText.text = "Sync pending. Tap to sync."
+                    syncStatusContainer.setOnClickListener {
+                        viewModel.syncPendingPupils()
+                    }
                 }
 
                 SyncStatus.SUCCESS -> {
@@ -60,15 +66,21 @@ class MainActivity : AppCompatActivity() {
                 SyncStatus.ERROR -> {
                     syncStatusContainer.visibility = View.VISIBLE
                     syncStatusText.text = getString(R.string.sync_error_tap_to_retry)
+                    syncStatusContainer.setOnClickListener {
+                        viewModel.syncPendingPupils()
+                    }
+                }
+
+                SyncStatus.SYNCING -> {
+                    syncStatusContainer.visibility = View.VISIBLE
+                    syncStatusText.text = getString(R.string.syncing)
+                    syncStatusContainer.setOnClickListener {}
                 }
             }
         }
 
-        syncStatusContainer.setOnClickListener {
-            viewModel.syncPendingPupils()
-        }
-
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)

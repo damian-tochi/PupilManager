@@ -33,6 +33,7 @@
         android:layout_marginTop="@dimen/margin_twelve"
         android:layout_marginEnd="@dimen/margin_ten"
         android:layout_marginBottom="@dimen/margin_ten"
+        android:layout_weight="1"
         app:cardBackgroundColor="@color/light_blue_color"
         app:cardCornerRadius="@dimen/margin_thirty"
         app:cardElevation="2dp">
@@ -81,7 +82,6 @@
                 android:layout_marginTop="@dimen/margin_fifteen"
                 android:layout_marginEnd="@dimen/default_margin"
                 android:layout_marginBottom="@dimen/margin_ten"
-                android:layout_weight="1"
                 app:cardCornerRadius="@dimen/margin_twenty"
                 app:cardElevation="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -116,7 +116,6 @@
                 android:layout_marginTop="@dimen/margin_ten"
                 android:layout_marginEnd="@dimen/default_margin"
                 android:layout_marginBottom="@dimen/margin_ten"
-                android:layout_weight="1"
                 app:cardCornerRadius="@dimen/margin_twenty"
                 app:cardElevation="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -147,7 +146,6 @@
                 android:layout_marginTop="@dimen/margin_ten"
                 android:layout_marginEnd="@dimen/default_margin"
                 android:layout_marginBottom="@dimen/margin_ten"
-                android:layout_weight="1"
                 app:cardCornerRadius="@dimen/margin_twenty"
                 app:cardElevation="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -174,23 +172,29 @@
 
     </androidx.cardview.widget.CardView>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1.5"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="0dp">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/saveEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="@dimen/margin_fifteen"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/green_stripe_rounded_button"
-        android:paddingStart="@dimen/margin_forty"
-        android:paddingEnd="@dimen/margin_forty"
-        android:text="@string/add_pupil"
-        android:textAllCaps="false"
-        android:textColor="@color/peach_color_text"
-        android:textSize="@dimen/small_text_size"
-        android:visibility="visible" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/saveEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:background="@drawable/green_stripe_rounded_button"
+            android:paddingStart="@dimen/margin_forty"
+            android:paddingEnd="@dimen/margin_forty"
+            android:text="@string/add_pupil"
+            android:textAllCaps="false"
+            android:textColor="@color/peach_color_text"
+            android:textSize="@dimen/small_text_size"
+            android:visibility="visible" />
+
+    </RelativeLayout>
+
 
 
 </LinearLayout>
